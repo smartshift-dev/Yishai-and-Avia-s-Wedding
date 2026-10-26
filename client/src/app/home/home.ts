@@ -37,7 +37,6 @@ export class Home {
   onOpened(): void {
     introSeen = true;
     this.showIntro.set(false);
-    this.confetti.burst(160);
   }
 
   toggleMusic(): void {

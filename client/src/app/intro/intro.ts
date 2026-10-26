@@ -1,5 +1,6 @@
 import { Component, DestroyRef, inject, output, signal } from '@angular/core';
 import { EVENT } from '../event';
+import { Confetti } from '../services/confetti';
 import { Melody } from '../services/melody';
 
 const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -85,6 +86,7 @@ function daysLabel(): string {
 })
 export class Intro {
   private melody = inject(Melody);
+  private confetti = inject(Confetti);
   readonly opened = output<void>();
   readonly event = EVENT;
   readonly initials = ['I', 'A']; // Yishai & Avia
@@ -110,6 +112,7 @@ export class Intro {
     if (this.stage() !== 'closed') return;
     this.melody.start(); // must run inside the click handler
     this.stage.set('opening');
+    this.confetti.burst(200);
     const [leave, done] = reduceMotion() ? [150, 500] : [2000, 2800];
     this.timers.push(
       window.setTimeout(() => this.stage.set('leaving'), leave),
