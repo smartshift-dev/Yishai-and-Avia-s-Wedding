@@ -12,7 +12,6 @@ export class Confetti {
   private cx: CanvasRenderingContext2D | null = null;
   private parts: Piece[] = [];
   private raf = 0;
-  private reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   private ensure(): boolean {
     if (this.cx) return true;
@@ -32,7 +31,7 @@ export class Confetti {
   }
 
   burst(n: number): void {
-    if (this.reduce || !this.ensure()) return;
+    if (!this.ensure()) return; // shown even with reduced motion, by request
     const cs = getComputedStyle(document.documentElement);
     const colors = [cs.getPropertyValue('--gold').trim(), cs.getPropertyValue('--wine').trim(), '#ffffff', '#6E8BC6', '#E9D9B0'];
     for (let i = 0; i < n; i++) {
