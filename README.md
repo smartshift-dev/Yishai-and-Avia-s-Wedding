@@ -1,47 +1,47 @@
 # ישי ואביה: דף החתונה
 
-Angular (client/) + Node/Express (server/).
+צד הלקוח ב-Angular (התיקייה `client/`), והשרת ב-Node עם Express (התיקייה `server/`).
 
-## Running
+## הרצה מקומית
 
 ```powershell
 npm run install:all
-npm run build                      # builds Angular into client/dist
-$env:ADMIN_PASSWORD = "<password>"
+npm run build                      # בונה את Angular לתיקייה client/dist
+$env:ADMIN_PASSWORD = "<סיסמה>"
 npm start                          # http://localhost:3000
 ```
 
-During development, run `npm run dev:server` and `npm run dev:client` (http://localhost:4200, with a proxy to the server).
+בזמן פיתוח מריצים את `npm run dev:server` ואת `npm run dev:client`. האתר נפתח בכתובת http://localhost:4200, והבקשות לשרת עוברות דרך proxy.
 
-## Configuration
+## הגדרות
 
-| Variable | Meaning |
+| משתנה | משמעות |
 |---|---|
-| `ADMIN_PASSWORD` | Admin password at `/admin`. Without it, admin login is disabled. |
-| `PORT` | Default 3000 |
-| `DATA_DIR` | Location of the database and recordings. Default `server/data` |
-| `COOKIE_SECRET` | Required in production. Locally, if not set, one is generated and saved in `DATA_DIR` |
-| `NODE_ENV=production` | Cookies marked `Secure` (requires HTTPS) |
-| `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | When set, data is stored in Supabase instead of locally |
+| `ADMIN_PASSWORD` | הסיסמה לכניסת בעלי השמחה בכתובת `/admin`. בלעדיה אי אפשר להיכנס. |
+| `PORT` | ברירת מחדל: 3000 |
+| `DATA_DIR` | איפה נשמרים מסד הנתונים וההקלטות בהרצה מקומית. ברירת מחדל: `server/data` |
+| `COOKIE_SECRET` | חובה בסביבת הייצור. בהרצה מקומית, אם הוא לא מוגדר, נוצר אחד ונשמר ב-`DATA_DIR`. |
+| `NODE_ENV=production` | העוגיות מסומנות `Secure`, ולכן צריך HTTPS. |
+| `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | כשהם מוגדרים, הנתונים נשמרים ב-Supabase ולא על הדיסק. |
 
-All event details (time, venue, dates) are in [shared/event.json](shared/event.json).
+כל פרטי האירוע (שעה, מקום ותאריכים) נמצאים בקובץ [shared/event.json](shared/event.json).
 
-## Identity and permissions
+## זיהוי והרשאות
 
-- Each browser receives an anonymous `gid` cookie signed by the server. A guest can only edit or delete the wish saved under their own identifier, and this is enforced on the server.
-- Admins sign in at `/admin` with a password and receive a signed cookie. Only they can delete someone else's wish (`DELETE /api/wishes/:id`).
-- Updates to the wishes list are pushed live over SSE (`/api/wishes/stream`).
+- כל דפדפן מקבל מהשרת עוגייה אנונימית וחתומה בשם `gid`. אורח יכול לערוך או למחוק רק את הברכה שנשמרה תחת המזהה שלו, והשרת אוכף את זה.
+- בעלי השמחה נכנסים בכתובת `/admin` עם סיסמה ומקבלים עוגייה חתומה. רק הם יכולים למחוק ברכה של מישהו אחר (`DELETE /api/wishes/:id`).
+- עדכונים ברשימת הברכות נשלחים לכל המבקרים בזמן אמת, ב-SSE (`/api/wishes/stream`).
 
-## Storage
+## אחסון
 
-- **Locally** (no `SUPABASE_URL`): SQLite at `server/data/wedding.db`, recordings in `server/data/audio`.
-- **In production**: Supabase. The `wishes` table plus the public `audio` bucket in Storage. Setup script: [supabase/schema.sql](supabase/schema.sql). The server uses the service-role key, and RLS blocks everyone else.
+- **בהרצה מקומית** (בלי `SUPABASE_URL`): הברכות נשמרות ב-SQLite בקובץ `server/data/wedding.db`, וההקלטות בתיקייה `server/data/audio`.
+- **בסביבת הייצור**: Supabase. הברכות נשמרות בטבלה `wishes`, וההקלטות ב-bucket ציבורי בשם `audio` ב-Storage. סקריפט ההקמה: [supabase/schema.sql](supabase/schema.sql). השרת ניגש עם מפתח ה-service-role, ו-RLS חוסם את כל השאר.
 
-## Deployment (free): Render + Supabase
+## העלאה לאוויר בחינם: Render + Supabase
 
-1. **Supabase**: create a project, then in SQL Editor run [supabase/schema.sql](supabase/schema.sql). Under Project Settings → API, copy the `Project URL` and the `service_role` key.
-2. **GitHub**: push this repository.
-3. **Render**: New → Blueprint → choose the repository. Render reads [render.yaml](render.yaml) and asks for `ADMIN_PASSWORD`, `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`. `COOKIE_SECRET` is generated automatically. Do not change it afterwards, or guests will lose the link to their wishes.
-4. **Keep awake**: Render's free server sleeps after 15 minutes. At [cron-job.org](https://cron-job.org), set up a call to `https://<address>.onrender.com/api/health` every 10 minutes. This also keeps the Supabase project from pausing.
+1. **Supabase:** פותחים פרויקט ומריצים את [supabase/schema.sql](supabase/schema.sql) ב-SQL Editor. אחר כך, ב-Project Settings ואז API, מעתיקים את ה-`Project URL` ואת מפתח ה-`service_role`.
+2. **GitHub:** מעלים את הקוד למאגר.
+3. **Render:** בוחרים New, אחר כך Blueprint, ובוחרים את המאגר. Render קורא את הקובץ [render.yaml](render.yaml) ומבקש את `ADMIN_PASSWORD`, `SUPABASE_URL` ו-`SUPABASE_SERVICE_ROLE_KEY`. את `COOKIE_SECRET` הוא יוצר לבד. אסור לשנות אותו אחר כך, אחרת האורחים יאבדו את הקישור לברכות שלהם.
+4. **שמירה על ערנות:** השרת החינמי של Render נרדם אחרי 15 דקות בלי מבקרים. ב-[cron-job.org](https://cron-job.org) מגדירים קריאה לכתובת `https://<הכתובת>.onrender.com/api/health` כל 10 דקות. זה גם מונע מפרויקט ה-Supabase להיות מושהה.
 
-Every push to `main` deploys automatically.
+כל דחיפה (push) לענף `main` מעלה את האתר מחדש באופן אוטומטי.
