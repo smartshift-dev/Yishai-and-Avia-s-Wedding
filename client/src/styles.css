@@ -63,6 +63,13 @@ button,input,textarea{font:inherit;color:inherit}
 .meta .sep{color:var(--gold);font-size:.7em;margin:0 10px;vertical-align:.15em}
 .pasuk{font-family:var(--serif);font-size:1.08rem;line-height:1.8;color:var(--muted);max-width:26em;margin:22px auto 0;font-style:normal}
 
+/* ---------- couple portrait: an arch like the hero ---------- */
+.portrait{position:relative;max-width:min(100%,380px);margin:52px auto 0;padding:8px;
+  border:1.5px solid var(--gold);border-radius:999px 999px 22px 22px;
+  background:color-mix(in srgb,var(--surface) 85%,transparent);
+  box-shadow:0 30px 80px -40px var(--glow),0 0 0 6px color-mix(in srgb,var(--bg) 60%,transparent),0 0 0 7px color-mix(in srgb,var(--gold) 45%,transparent)}
+.portrait img{display:block;width:100%;height:auto;border-radius:999px 999px 14px 14px}
+
 /* ---------- ornament divider ---------- */
 .ornament{display:flex;align-items:center;gap:14px;color:var(--gold);margin:52px auto 30px;max-width:420px}
 .ornament::before,.ornament::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
@@ -150,6 +157,13 @@ audio{width:100%;max-width:340px;height:40px}
 footer{margin-top:64px;text-align:center;color:var(--muted);font-family:var(--serif)}
 footer .sign{font-size:1.5rem;margin:0}
 footer a{color:var(--muted);font-family:var(--sans);font-size:.8rem}
+footer .credit{margin:32px 0 0}
+footer .credit a{display:inline-grid;gap:2px;padding:12px 26px;border:1px solid color-mix(in srgb,var(--gold) 55%,transparent);border-radius:999px;
+  background:color-mix(in srgb,var(--surface) 80%,transparent);color:var(--text);font-size:.85rem;text-decoration:none;
+  transition:border-color .2s,box-shadow .2s}
+footer .credit a:hover{border-color:var(--gold);box-shadow:0 8px 24px -12px var(--glow)}
+footer .credit .by{font-size:.72rem;color:var(--muted)}
+footer .credit .logo{display:block;justify-self:center;width:auto;height:56px;margin:4px 0;padding:4px 10px;background:#fff;border-radius:12px}
 
 @media (prefers-reduced-motion:reduce){
   .gold-text,.music .eq b{animation:none}
