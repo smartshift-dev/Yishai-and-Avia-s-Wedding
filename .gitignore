@@ -1,0 +1,7 @@
+node_modules/
+client/dist/
+client/.angular/
+server/data/
+.env
+# Source copy of the song; the site serves client/public/chuppah.mp3
+/חופה.mp3

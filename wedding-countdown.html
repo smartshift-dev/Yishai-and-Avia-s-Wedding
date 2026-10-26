@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ישי ואביה · כ״ד בטבת תשפ״ז</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF2F8; --surface:#FFFFFF; --line:#CBD5E6; --text:#13213D; --muted:#4A5878;
+  --gold:#9A7424; --gold-soft:#E9D9B0; --wine:#A3323F; --on-gold:#FFFFFF; --ok:#2F7A4F;
+  --serif:"Frank Ruhl Libre","David","Times New Roman",serif;
+  --sans:"Rubik","Arial Hebrew","Segoe UI",Arial,sans-serif;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1E38; --surface:#172B4D; --line:#2C4470; --text:#F5EEDD; --muted:#B9C2D6;
+    --gold:#D9B45F; --gold-soft:#3A3a2a; --wine:#E07080; --on-gold:#1A1405; --ok:#7FD3A0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1E38; --surface:#172B4D; --line:#2C4470; --text:#F5EEDD; --muted:#B9C2D6;
+  --gold:#D9B45F; --gold-soft:#3A3a2a; --wine:#E07080; --on-gold:#1A1405; --ok:#7FD3A0;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+main{max-width:640px;margin:0 auto;padding:24px 18px 64px}
+img{max-width:100%}
+a{color:inherit}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+
+/* hero */
+.hero{text-align:center;padding:8px 0 4px}
+.chuppah{display:block;width:min(100%,460px);margin:0 auto -8px;height:auto;color:var(--gold)}
+.names{font-family:var(--serif);font-weight:900;font-size:clamp(3rem,13vw,5.4rem);line-height:1;margin:0;letter-spacing:-.01em}
+.names .and{font-weight:400;color:var(--gold);font-size:.6em;margin:0 .15em}
+.dates{margin:18px 0 0;font-family:var(--serif);font-size:1.35rem;font-weight:700}
+.dates small{display:block;font-family:var(--sans);font-weight:400;font-size:1rem;color:var(--muted);margin-top:2px}
+.pasuk{font-family:var(--serif);font-size:1.12rem;line-height:1.75;color:var(--muted);max-width:30em;margin:22px auto 0}
+
+/* countdown */
+.count{margin:34px 0 0;text-align:center}
+.cells{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.cell{padding:14px 4px 10px;border-top:2px solid var(--gold)}
+.num{display:block;font-family:var(--serif);font-weight:900;font-size:clamp(2.1rem,9vw,3.4rem);line-height:1;font-variant-numeric:tabular-nums}
+.lbl{display:block;margin-top:8px;font-size:.92rem;color:var(--muted)}
+.bar{height:6px;background:var(--line);border-radius:3px;margin:20px 0 6px;overflow:hidden}
+.bar span{display:block;height:100%;width:0;background:var(--gold);border-radius:3px;transition:width .6s ease}
+.barnote{font-size:.88rem;color:var(--muted);margin:0}
+.mazal{display:none;font-family:var(--serif);font-weight:900;font-size:clamp(2.6rem,12vw,4.4rem);color:var(--gold);margin:6px 0 0}
+.mazal + p{display:none;margin:4px 0 0;color:var(--muted)}
+.count.done .cells,.count.done .bar,.count.done .barnote{display:none}
+.count.done .mazal,.count.done .mazal + p{display:block}
+
+/* actions */
+.actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:30px 0 0}
+.btn{appearance:none;border:1.5px solid var(--gold);background:transparent;color:var(--text);padding:10px 18px;border-radius:999px;cursor:pointer;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:8px;line-height:1.2}
+.btn:hover{background:color-mix(in srgb,var(--gold) 14%,transparent)}
+.btn.primary{background:var(--gold);color:var(--on-gold)}
+.btn.primary:hover{background:color-mix(in srgb,var(--gold) 86%,black)}
+.btn[aria-pressed="true"]{background:var(--gold);color:var(--on-gold)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.quiet{border-color:var(--line);font-size:.9rem;padding:6px 12px}
+.btn.danger{border-color:var(--wine);color:var(--wine)}
+
+/* sections */
+section.block{margin-top:48px}
+h2{font-family:var(--serif);font-weight:700;font-size:1.75rem;margin:0 0 4px}
+.lead{margin:0 0 18px;color:var(--muted)}
+.venue{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
+.venue h3{font-family:var(--serif);font-size:1.4rem;margin:0}
+.venue p{margin:2px 0 14px;color:var(--muted)}
+.venue .actions{justify-content:flex-start;margin:0}
+
+form{display:grid;gap:12px}
+label{display:grid;gap:4px;font-weight:500;font-size:.95rem}
+input[type=text],input[type=number],textarea{width:100%;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:10px 12px;font-weight:400}
+textarea{min-height:96px;resize:vertical}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg label{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 16px;cursor:pointer;font-weight:400}
+.seg input{accent-color:var(--gold);margin:0}
+.seg label:has(input:checked){border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
+fieldset{border:0;padding:0;margin:0;display:grid;gap:6px}
+legend{font-weight:500;font-size:.95rem;padding:0;margin-bottom:4px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.msg{min-height:1.4em;margin:0;font-size:.93rem}
+.msg.err{color:var(--wine)} .msg.ok{color:var(--ok)}
+.note{font-size:.9rem;color:var(--muted);margin:0}
+.rec{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.rec .timer{font-variant-numeric:tabular-nums;color:var(--wine);font-weight:500}
+audio{width:100%;max-width:340px;height:40px}
+
+.wishes{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:14px}
+.wish{border-inline-start:3px solid var(--gold);padding:4px 16px 6px;background:transparent}
+.wish p{margin:0 0 6px;white-space:pre-wrap;overflow-wrap:anywhere;font-family:var(--serif);font-size:1.12rem;line-height:1.7}
+.wish .who{font-family:var(--sans);font-size:.92rem;color:var(--muted);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.wish .who b{color:var(--text);font-weight:500}
+.empty{color:var(--muted);margin-top:22px}
+
+.owner{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.owner h3{margin:0 0 6px;font-family:var(--serif);font-size:1.3rem}
+.sum{display:flex;gap:22px;flex-wrap:wrap;margin:6px 0 14px}
+.sum div{display:grid}
+.sum b{font-family:var(--serif);font-size:1.8rem;line-height:1.1}
+.sum span{font-size:.88rem;color:var(--muted)}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:start;padding:8px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--muted);font-weight:500}
+td.no{color:var(--wine)}
+footer{margin-top:56px;text-align:center;color:var(--muted);font-size:.9rem;font-family:var(--serif)}
+
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:50;width:100%;height:100%}
+@media (prefers-reduced-motion:reduce){.bar span{transition:none}}
+</style>
+</head>
+<body>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<main>
+  <header class="hero">
+    <svg class="chuppah" viewBox="0 0 460 150" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      <path d="M40 46 Q230 2 420 46"/>
+      <path d="M40 46 Q230 14 420 46" stroke-width="1.2" opacity=".6"/>
+      <path d="M40 46 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0" stroke-width="1.4"/>
+      <line x1="40" y1="40" x2="40" y2="150"/><line x1="420" y1="40" x2="420" y2="150"/>
+      <circle cx="40" cy="36" r="4.5" fill="currentColor"/><circle cx="420" cy="36" r="4.5" fill="currentColor"/>
+      <circle cx="230" cy="22" r="3" fill="currentColor"/>
+    </svg>
+    <h1 class="names">ישי<span class="and">ו</span>אביה</h1>
+    <p class="dates">כ״ד בטבת תשפ״ז<small>יום ראשון, 3 בינואר 2027 · 19:00 · אולמי אחוזת דניאל, נתיבות</small></p>
+    <p class="pasuk">עוד ישמע בערי יהודה ובחוצות ירושלים, קול ששון וקול שמחה, קול חתן וקול כלה</p>
+  </header>
+
+  <section class="count" id="count" aria-live="polite">
+    <div class="cells">
+      <div class="cell"><span class="num" id="d">–</span><span class="lbl">ימים</span></div>
+      <div class="cell"><span class="num" id="h">–</span><span class="lbl">שעות</span></div>
+      <div class="cell"><span class="num" id="m">–</span><span class="lbl">דקות</span></div>
+      <div class="cell"><span class="num" id="s">–</span><span class="lbl">שניות</span></div>
+    </div>
+    <div class="bar" role="progressbar" aria-label="הדרך לחתונה" aria-valuemin="0" aria-valuemax="100"><span id="barfill"></span></div>
+    <p class="barnote" id="barnote"></p>
+    <p class="mazal">מזל טוב!</p>
+    <p>ישי ואביה, שתזכו לבנות בית נאמן בישראל</p>
+  </section>
+
+  <div class="actions">
+    <a class="btn primary" id="cal" target="_blank" rel="noopener">הוספה ליומן</a>
+    <button class="btn" id="music" type="button" aria-pressed="false">♪ מנגינה</button>
+    <button class="btn" id="burst" type="button">✦ קונפטי</button>
+  </div>
+
+  <section class="block" aria-labelledby="venue-h">
+    <h2 id="venue-h">מקום האירוע</h2>
+    <div class="venue">
+      <h3>אולמי אחוזת דניאל</h3>
+      <p>נתיבות</p>
+      <div class="actions">
+        <a class="btn" id="waze" target="_blank" rel="noopener">ניווט ב-Waze</a>
+        <a class="btn" id="gmaps" target="_blank" rel="noopener">פתיחה ב-Google Maps</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="rsvp-h">
+    <h2 id="rsvp-h">אישור הגעה</h2>
+    <p class="lead">התשובה שלכם נשמרת אצלכם וגלויה רק לבעלי השמחה. אפשר לחזור ולעדכן בכל עת.</p>
+    <form id="rsvpForm" novalidate>
+      <label>שם
+        <input type="text" id="rName" maxlength="60" autocomplete="name" required>
+      </label>
+      <fieldset>
+        <legend>האם תגיעו?</legend>
+        <div class="seg">
+          <label><input type="radio" name="coming" value="yes" checked> נגיע בשמחה</label>
+          <label><input type="radio" name="coming" value="no"> לא נוכל להגיע</label>
+        </div>
+      </fieldset>
+      <label id="countWrap">מספר משתתפים
+        <input type="number" id="rCount" min="1" max="30" value="1" inputmode="numeric" style="max-width:120px">
+      </label>
+      <div class="row"><button class="btn primary" type="submit" id="rSave">שמירת התשובה</button></div>
+      <p class="msg" id="rMsg" role="status"></p>
+    </form>
+    <div class="owner" id="ownerPanel" hidden>
+      <h3>אישורי הגעה</h3>
+      <div class="sum">
+        <div><b id="sumPeople">0</b><span>משתתפים</span></div>
+        <div><b id="sumYes">0</b><span>אישרו הגעה</span></div>
+        <div><b id="sumNo">0</b><span>לא יגיעו</span></div>
+      </div>
+      <div class="tablewrap"><table><thead><tr><th>שם</th><th>תשובה</th><th>משתתפים</th><th>עודכן</th></tr></thead><tbody id="rsvpRows"></tbody></table></div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="wish-h">
+    <h2 id="wish-h">איחולים לחתן ולכלה</h2>
+    <p class="lead">כתבו ברכה או הקליטו אותה בקולכם, עד 30 שניות. לכל אורח ברכה אחת, ואפשר לעדכן אותה.</p>
+    <form id="wishForm" novalidate>
+      <label>שם
+        <input type="text" id="wName" maxlength="60" autocomplete="name">
+      </label>
+      <label>הברכה
+        <textarea id="wText" maxlength="600"></textarea>
+      </label>
+      <div class="rec">
+        <button class="btn" type="button" id="recBtn">● הקלטת ברכה</button>
+        <span class="timer" id="recTimer" hidden></span>
+        <audio id="recPreview" controls hidden></audio>
+        <button class="btn quiet" type="button" id="recClear" hidden>מחיקת ההקלטה</button>
+      </div>
+      <div class="row">
+        <button class="btn primary" type="submit" id="wSave">שליחת הברכה</button>
+        <button class="btn quiet danger" type="button" id="wDelete" hidden>מחיקת הברכה שלי</button>
+      </div>
+      <p class="msg" id="wMsg" role="status"></p>
+    </form>
+    <ul class="wishes" id="wishList"></ul>
+    <p class="empty" id="wishEmpty">עוד אין ברכות. הברכה הראשונה יכולה להיות שלכם.</p>
+  </section>
+
+  <footer>בשעה טובה ומוצלחת</footer>
+</main>
+
+<script>
+(function(){
+"use strict";
+/* ---------- event details ---------- */
+var EVENT = {
+  at: new Date("2027-01-03T19:00:00+02:00"),
+  end: new Date("2027-01-03T23:30:00+02:00"),
+  dayIL: "2027-01-03",
+  countFrom: new Date("2026-10-25T00:00:00+03:00"),
+  title: "החתונה של ישי ואביה",
+  place: "אולמי אחוזת דניאל, נתיבות"
+};
+var $ = function(id){ return document.getElementById(id); };
+
+/* ---------- links ---------- */
+(function(){
+  var q = encodeURIComponent(EVENT.place);
+  $("waze").href = "https://waze.com/ul?q=" + q + "&navigate=yes";
+  $("gmaps").href = "https://www.google.com/maps/search/?api=1&query=" + q;
+  var cal = "https://calendar.google.com/calendar/render?action=TEMPLATE"
+    + "&text=" + encodeURIComponent(EVENT.title)
+    + "&dates=20270103T190000/20270103T233000&ctz=Asia/Jerusalem"
+    + "&location=" + q
+    + "&details=" + encodeURIComponent("כ״ד בטבת תשפ״ז. בשעה טובה ומוצלחת!");
+  $("cal").href = cal;
+})();
+
+/* ---------- countdown ---------- */
+var ilDay = new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Jerusalem",year:"numeric",month:"2-digit",day:"2-digit"});
+var celebrated = false;
+function pad(n){ return n < 10 ? "0" + n : String(n); }
+function tick(){
+  var now = new Date();
+  var diff = EVENT.at - now;
+  var today = ilDay.format(now);
+  if (today >= EVENT.dayIL || diff <= 0){
+    $("count").classList.add("done");
+    if (!celebrated){ celebrated = true; setTimeout(function(){ burst(260); }, 400); }
+    return;
+  }
+  var s = Math.floor(diff/1000);
+  $("d").textContent = Math.floor(s/86400);
+  $("h").textContent = pad(Math.floor(s%86400/3600));
+  $("m").textContent = pad(Math.floor(s%3600/60));
+  $("s").textContent = pad(s%60);
+  var total = EVENT.at - EVENT.countFrom;
+  var pct = Math.max(0, Math.min(100, (now - EVENT.countFrom) / total * 100));
+  $("barfill").style.width = pct.toFixed(2) + "%";
+  document.querySelector(".bar").setAttribute("aria-valuenow", Math.round(pct));
+  $("barnote").textContent = "עברנו " + Math.floor(pct) + "% מהדרך";
+}
+tick(); setInterval(tick, 1000);
+
+/* ---------- confetti ---------- */
+var cv = $("confetti"), cx = cv.getContext("2d"), parts = [], raf = 0;
+var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function size(){ var r = window.devicePixelRatio||1; cv.width = innerWidth*r; cv.height = innerHeight*r; cx.setTransform(r,0,0,r,0,0); }
+size(); addEventListener("resize", size);
+function burst(n){
+  if (reduce) return;
+  var cs = getComputedStyle(document.documentElement);
+  var colors = [cs.getPropertyValue("--gold").trim(), cs.getPropertyValue("--wine").trim(), "#ffffff", "#6E8BC6", "#E9D9B0"];
+  for (var i=0;i<n;i++){
+    parts.push({x:Math.random()*innerWidth, y:-20-Math.random()*innerHeight*0.4, w:6+Math.random()*6, h:8+Math.random()*8,
+      vx:-1.2+Math.random()*2.4, vy:2+Math.random()*3, r:Math.random()*6.3, vr:-0.15+Math.random()*0.3,
+      c:colors[i%colors.length], life:0});
+  }
+  if (!raf) raf = requestAnimationFrame(step);
+}
+function step(){
+  cx.clearRect(0,0,innerWidth,innerHeight);
+  parts = parts.filter(function(p){ return p.y < innerHeight + 30; });
+  parts.forEach(function(p){
+    p.x += p.vx + Math.sin((p.life++)/18)*0.6; p.y += p.vy; p.r += p.vr;
+    cx.save(); cx.translate(p.x,p.y); cx.rotate(p.r); cx.fillStyle = p.c;
+    cx.fillRect(-p.w/2,-p.h/2,p.w,p.h*Math.abs(Math.cos(p.r))); cx.restore();
+  });
+  raf = parts.length ? requestAnimationFrame(step) : 0;
+  if (!raf) cx.clearRect(0,0,innerWidth,innerHeight);
+}
+$("burst").addEventListener("click", function(){ burst(180); });
+setTimeout(function(){ burst(120); }, 500);
+
+/* ---------- original melody (WebAudio) ---------- */
+var ac = null, playing = false, nextTime = 0, stepIdx = 0, timer = 0, master = null;
+// Original tune in D, freygish flavour. Each entry: [semitones from D4, length in eighths]; null = rest
+var D4 = 293.66;
+var TUNE = [
+  [7,1],[8,1],[11,1],[8,1],[7,2],[5,1],[4,1],
+  [7,1],[5,1],[4,1],[1,1],[0,4],
+  [0,1],[1,1],[4,1],[5,1],[7,2],[8,1],[7,1],
+  [5,1],[4,1],[5,1],[7,1],[4,4],
+  [12,1],[11,1],[12,1],[13,1],[12,2],[10,1],[8,1],
+  [7,1],[8,1],[10,1],[8,1],[7,4],
+  [5,1],[7,1],[8,1],[7,1],[5,1],[4,1],[1,1],[4,1],
+  [0,2],[7,2],[0,4]
+];
+var EIGHTH = 60/138/2;
+function note(freq, t, dur, type, vol){
+  var o = ac.createOscillator(), g = ac.createGain();
+  o.type = type; o.frequency.value = freq;
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(vol, t+0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t+dur);
+  o.connect(g); g.connect(master); o.start(t); o.stop(t+dur+0.05);
+}
+function schedule(){
+  while (nextTime < ac.currentTime + 0.25){
+    var n = TUNE[stepIdx];
+    var len = n[1]*EIGHTH;
+    note(D4*Math.pow(2,n[0]/12), nextTime, len*0.95, "triangle", 0.22);
+    note(D4*2*Math.pow(2,n[0]/12), nextTime, len*0.5, "sine", 0.04);
+    nextTime += len;
+    stepIdx = (stepIdx+1) % TUNE.length;
+  }
+  // oom-pah accompaniment on its own clock
+  while (bassTime < ac.currentTime + 0.25){
+    var beat = bassBeat % 4;
+    if (beat === 0 || beat === 2) note(D4/2*(bassBeat%8<4?1:Math.pow(2,7/12)), bassTime, EIGHTH*1.6, "sine", 0.18);
+    else { note(D4*Math.pow(2,4/12), bassTime, EIGHTH*0.9, "triangle", 0.05); note(D4*Math.pow(2,7/12), bassTime, EIGHTH*0.9, "triangle", 0.05); }
+    bassTime += EIGHTH*2; bassBeat++;
+  }
+}
+var bassTime = 0, bassBeat = 0;
+$("music").addEventListener("click", function(){
+  var b = this;
+  if (!playing){
+    try{
+      ac = ac || new (window.AudioContext||window.webkitAudioContext)();
+      ac.resume();
+      master = ac.createGain(); master.gain.value = 0.7; master.connect(ac.destination);
+      nextTime = bassTime = ac.currentTime + 0.08; stepIdx = 0; bassBeat = 0;
+      timer = setInterval(schedule, 60); playing = true;
+      b.setAttribute("aria-pressed","true"); b.textContent = "❚❚ עצירת המנגינה";
+    }catch(e){ b.disabled = true; b.textContent = "המנגינה לא זמינה בדפדפן הזה"; }
+  } else {
+    clearInterval(timer); playing = false;
+    var m = master; m.gain.setTargetAtTime(0.0001, ac.currentTime, 0.05); setTimeout(function(){ m.disconnect(); }, 400);
+    b.setAttribute("aria-pressed","false"); b.textContent = "♪ מנגינה";
+  }
+});
+
+/* ---------- forms: shared helpers ---------- */
+function say(el, text, kind){ el.textContent = text; el.className = "msg" + (kind ? " " + kind : ""); }
+function errText(e){
+  var c = e && e.code;
+  if (c === "invalid_argument") return "השמירה לא אושרה. כדי לשלוח צריך הרשאת השתתפות בדף. אפשר לבקש קישור מבעלי השמחה.";
+  if (c === "quota_exceeded") return "אין מקום לשמור עוד נתונים בדף. כדאי לפנות לבעלי השמחה.";
+  if (c === "resource_exhausted") return "יותר מדי פעולות ברצף. נסו שוב בעוד רגע.";
+  return "השמירה לא הצליחה. בדקו את החיבור ונסו שוב.";
+}
+var fmt = new Intl.DateTimeFormat("he-IL",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit",timeZone:"Asia/Jerusalem"});
+function lockForms(text){
+  ["rsvpForm","wishForm"].forEach(function(id){
+    $(id).querySelectorAll("input,textarea,button").forEach(function(x){ x.disabled = true; });
+  });
+  say($("rMsg"), text); say($("wMsg"), text);
+}
+
+/* ---------- recording ---------- */
+var recorder = null, chunks = [], recData = null, recStart = 0, recTick = 0;
+var MAX_REC = 30, MAX_B64 = 230000;
+function pickMime(){
+  var opts = ["audio/webm;codecs=opus","audio/ogg;codecs=opus","audio/mp4","audio/webm"];
+  if (!window.MediaRecorder) return null;
+  for (var i=0;i<opts.length;i++) if (MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(opts[i])) return opts[i];
+  return "";
+}
+function toUrl(dataUrl){
+  try{
+    var i = dataUrl.indexOf(","), mime = dataUrl.slice(5, dataUrl.indexOf(";"));
+    var bin = atob(dataUrl.slice(i+1)), arr = new Uint8Array(bin.length);
+    for (var k=0;k<bin.length;k++) arr[k] = bin.charCodeAt(k);
+    return URL.createObjectURL(new Blob([arr], {type: mime}));
+  }catch(e){ return dataUrl; }
+}
+function setRecording(data){
+  recData = data;
+  $("recPreview").hidden = !data; $("recClear").hidden = !data;
+  if (data) $("recPreview").src = toUrl(data); else $("recPreview").removeAttribute("src");
+}
+$("recBtn").addEventListener("click", function(){
+  var btn = this;
+  if (recorder && recorder.state === "recording"){ recorder.stop(); return; }
+  var mime = pickMime();
+  if (mime === null || !navigator.mediaDevices){ say($("wMsg"), "הדפדפן הזה לא תומך בהקלטה. אפשר לכתוב ברכה במקום.", "err"); return; }
+  navigator.mediaDevices.getUserMedia({audio:true}).then(function(stream){
+    chunks = [];
+    var o = {audioBitsPerSecond: 32000}; if (mime) o.mimeType = mime;
+    recorder = new MediaRecorder(stream, o);
+    recorder.ondataavailable = function(e){ if (e.data.size) chunks.push(e.data); };
+    recorder.onstop = function(){
+      stream.getTracks().forEach(function(t){ t.stop(); });
+      clearInterval(recTick); $("recTimer").hidden = true; btn.textContent = "● הקלטה מחדש";
+      var blob = new Blob(chunks, {type: recorder.mimeType || "audio/webm"});
+      var fr = new FileReader();
+      fr.onload = function(){
+        if (fr.result.length > MAX_B64){ setRecording(null); say($("wMsg"), "ההקלטה גדולה מדי לשמירה. נסו הקלטה קצרה יותר.", "err"); return; }
+        setRecording(fr.result); say($("wMsg"), "ההקלטה מוכנה. אפשר להאזין לה ולשלוח.", "ok");
+      };
+      fr.readAsDataURL(blob);
+    };
+    recorder.start(); recStart = Date.now();
+    btn.textContent = "■ סיום ההקלטה"; $("recTimer").hidden = false; say($("wMsg"), "");
+    recTick = setInterval(function(){
+      var sec = Math.floor((Date.now()-recStart)/1000);
+      $("recTimer").textContent = "0:" + pad(sec) + " / 0:30";
+      if (sec >= MAX_REC && recorder.state === "recording") recorder.stop();
+    }, 250);
+  }).catch(function(){ say($("wMsg"), "אין גישה למיקרופון. אפשר לאשר גישה בדפדפן או לכתוב ברכה במקום.", "err"); });
+});
+$("recClear").addEventListener("click", function(){ setRecording(null); $("recBtn").textContent = "● הקלטת ברכה"; });
+
+/* ---------- RSVP count toggle ---------- */
+document.querySelectorAll('input[name=coming]').forEach(function(r){
+  r.addEventListener("change", function(){ $("countWrap").hidden = (this.value === "no" && this.checked); });
+});
+
+/* ---------- live data ---------- */
+var C = window.claude;
+if (!C || !C.use){ lockForms("שמירת ברכות ואישורי הגעה פועלת בדף שפורסם ב-claude.ai."); return; }
+
+Promise.all([C.use("db"), C.use("user")]).then(function(r){
+  var db = r[0], user = r[1];
+  if (!db || !user){ lockForms("כדי לשלוח ברכה או אישור הגעה צריך להיות מחוברים ל-claude.ai."); return; }
+  return Promise.all([user.id(), user.isOwner(), user.can("data.write")]).then(function(v){
+    start(db, v[0], v[1], v[2]);
+  });
+}).catch(function(){ lockForms("השמירה לא זמינה כרגע. נסו לרענן את הדף."); });
+
+function start(db, uid, isOwner, canWrite){
+  if (!uid){ lockForms("כדי לשלוח ברכה או אישור הגעה צריך להיות מחוברים ל-claude.ai."); }
+  else if (canWrite === false){ lockForms("אפשר לקרוא את הברכות. כדי לשלוח ברכה או אישור הגעה צריך הרשאת השתתפות, שאפשר לבקש מבעלי השמחה."); }
+
+  /* RSVP: own answer */
+  if (uid){
+    db.doc("rsvp/" + uid).get().then(function(s){
+      if (!s.exists) return;
+      var d = s.data();
+      $("rName").value = d.name || "";
+      document.querySelector('input[name=coming][value=' + (d.coming ? "yes" : "no") + ']').checked = true;
+      $("countWrap").hidden = !d.coming;
+      $("rCount").value = d.count || 1;
+      say($("rMsg"), "התשובה שלכם שמורה. אפשר לעדכן אותה כאן.", "ok");
+      $("rSave").textContent = "עדכון התשובה";
+    }).catch(function(){});
+  }
+  $("rsvpForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    if (!uid) return;
+    var name = $("rName").value.trim();
+    var coming = document.querySelector('input[name=coming]:checked').value === "yes";
+    var count = Math.max(1, Math.min(30, parseInt($("rCount").value,10) || 1));
+    if (!name){ say($("rMsg"), "כתבו שם כדי שנדע מי עונה.", "err"); $("rName").focus(); return; }
+    var b = $("rSave"); b.disabled = true;
+    db.doc("rsvp/" + uid).set({name:name, coming:coming, count: coming ? count : 0, ts: Date.now()})
+      .then(function(){ say($("rMsg"), coming ? "תודה! נשמח לראותכם." : "תודה שעדכנתם. נשמח לשמוע מכם בשמחות.", "ok"); b.textContent = "עדכון התשובה"; if (coming) burst(80); })
+      .catch(function(err){ say($("rMsg"), errText(err), "err"); })
+      .then(function(){ b.disabled = false; });
+  });
+
+  /* RSVP: owner list */
+  if (isOwner){
+    $("ownerPanel").hidden = false;
+    db.collection("rsvp").orderBy("ts","desc").limit(1000).onSnapshot(function(snap){
+      var tb = $("rsvpRows"); tb.textContent = "";
+      var people = 0, yes = 0, no = 0;
+      snap.docs.forEach(function(doc){
+        var d = doc.data() || {};
+        if (d.coming){ yes++; people += d.count || 0; } else no++;
+        var tr = document.createElement("tr");
+        [d.name || "ללא שם", d.coming ? "מגיעים" : "לא מגיעים", d.coming ? String(d.count||0) : "–", d.ts ? fmt.format(new Date(d.ts)) : ""]
+          .forEach(function(t,i){ var td = document.createElement("td"); td.textContent = t; if (i===1 && !d.coming) td.className = "no"; tr.appendChild(td); });
+        tb.appendChild(tr);
+      });
+      if (!snap.size){ var tr = document.createElement("tr"), td = document.createElement("td"); td.colSpan = 4; td.textContent = "עוד לא התקבלו אישורי הגעה."; tr.appendChild(td); tb.appendChild(tr); }
+      $("sumPeople").textContent = people; $("sumYes").textContent = yes; $("sumNo").textContent = no;
+    }, function(){});
+  }
+
+  /* Wishes */
+  var mine = null, prefilled = false;
+  db.collection("wishes").orderBy("ts","desc").limit(500).onSnapshot(function(snap){
+    var ul = $("wishList"); ul.textContent = "";
+    mine = null;
+    snap.docs.forEach(function(doc){
+      var d = doc.data() || {};
+      var isMine = uid && doc.id === uid;
+      if (isMine) mine = d;
+      var li = document.createElement("li"); li.className = "wish";
+      if (d.text){ var p = document.createElement("p"); p.textContent = d.text; li.appendChild(p); }
+      if (typeof d.audio === "string" && d.audio.indexOf("data:audio/") === 0){
+        var a = document.createElement("audio"); a.controls = true; a.preload = "none"; a.src = toUrl(d.audio); li.appendChild(a);
+      }
+      var who = document.createElement("div"); who.className = "who";
+      var b = document.createElement("b"); b.textContent = d.name || "אורח"; who.appendChild(b);
+      if (d.ts){ var t = document.createElement("span"); t.textContent = fmt.format(new Date(d.ts)); who.appendChild(t); }
+      if (isOwner && !isMine){
+        var del = document.createElement("button"); del.type = "button"; del.className = "btn quiet danger"; del.textContent = "מחיקה";
+        del.addEventListener("click", function(){
+          if (del.dataset.armed !== "1"){ del.dataset.armed = "1"; del.textContent = "למחוק? לחצו שוב"; setTimeout(function(){ del.dataset.armed = ""; del.textContent = "מחיקה"; }, 4000); return; }
+          del.disabled = true;
+          db.doc("wishes/" + doc.id).delete().catch(function(){ del.disabled = false; del.textContent = "המחיקה נכשלה"; });
+        });
+        who.appendChild(del);
+      }
+      li.appendChild(who); ul.appendChild(li);
+    });
+    $("wishEmpty").hidden = snap.size > 0;
+    $("wDelete").hidden = !mine;
+    $("wSave").textContent = mine ? "עדכון הברכה" : "שליחת הברכה";
+    if (mine && !prefilled){
+      prefilled = true;
+      $("wName").value = mine.name || ""; $("wText").value = mine.text || "";
+      if (mine.audio) setRecording(mine.audio);
+    }
+  }, function(){ $("wishEmpty").textContent = "לא ניתן לטעון את הברכות כרגע."; });
+
+  $("wishForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    if (!uid) return;
+    var name = $("wName").value.trim(), text = $("wText").value.trim();
+    if (!name){ say($("wMsg"), "כתבו שם כדי שהחתן והכלה ידעו ממי הברכה.", "err"); $("wName").focus(); return; }
+    if (!text && !recData){ say($("wMsg"), "כתבו ברכה או הקליטו אותה.", "err"); $("wText").focus(); return; }
+    var b = $("wSave"); b.disabled = true; say($("wMsg"), "שומרים…");
+    var body = {name:name, text:text, ts: Date.now()};
+    if (recData) body.audio = recData;
+    db.doc("wishes/" + uid).set(body)
+      .then(function(){ say($("wMsg"), "הברכה נשמרה. תודה!", "ok"); burst(90); })
+      .catch(function(err){ say($("wMsg"), errText(err), "err"); })
+      .then(function(){ b.disabled = false; });
+  });
+  $("wDelete").addEventListener("click", function(){
+    var b = this;
+    if (b.dataset.armed !== "1"){ b.dataset.armed = "1"; b.textContent = "למחוק? לחצו שוב"; setTimeout(function(){ b.dataset.armed = ""; b.textContent = "מחיקת הברכה שלי"; }, 4000); return; }
+    b.disabled = true;
+    db.doc("wishes/" + uid).delete()
+      .then(function(){ $("wText").value = ""; setRecording(null); prefilled = false; say($("wMsg"), "הברכה נמחקה.", "ok"); })
+      .catch(function(err){ say($("wMsg"), errText(err), "err"); })
+      .then(function(){ b.disabled = false; b.dataset.armed = ""; b.textContent = "מחיקת הברכה שלי"; });
+  });
+}
+})();
+</script>
+</body>
+</html>

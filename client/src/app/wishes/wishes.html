@@ -1,0 +1,64 @@
+<section class="block" aria-labelledby="wish-h">
+  <h2 id="wish-h">איחולים לחתן ולכלה</h2>
+  <p class="lead">כתבו ברכה או הקליטו אותה בקולכם, עד 30 שניות. לכל אורח ברכה אחת, ואפשר לעדכן אותה.</p>
+
+  <form class="card framed" (submit)="submit($event)" novalidate>
+    <label>שם
+      <input type="text" id="wName" name="name" maxlength="60" autocomplete="name" [(ngModel)]="name">
+    </label>
+    <label>הברכה
+      <textarea id="wText" name="text" maxlength="600" [(ngModel)]="text"></textarea>
+      <span class="note counter">{{ text().length }}/600</span>
+    </label>
+
+    <div class="rec">
+      <button class="btn rec-btn" [class.live]="recording()" type="button" (click)="toggleRecording()" [attr.aria-pressed]="recording()">
+        <span class="dot" aria-hidden="true"></span>
+        @if (recording()) { סיום ההקלטה } @else if (hasRecording()) { הקלטה מחדש } @else { הקלטת ברכה }
+      </button>
+      @if (recording()) {
+        <span class="timer" role="timer">{{ timerLabel() }}</span>
+      }
+      @if (previewUrl(); as src) {
+        <audio controls [src]="src"></audio>
+        <button class="btn quiet" type="button" (click)="clearRecording()">מחיקת ההקלטה</button>
+      }
+    </div>
+
+    <div class="row">
+      <button class="btn primary" type="submit" [disabled]="saving() || recording()">
+        {{ mine() ? 'עדכון הברכה' : 'שליחת הברכה' }}
+      </button>
+      @if (mine()) {
+        <button class="btn quiet danger" type="button" (click)="deleteMine()">
+          {{ armedDelete() === 'mine' ? 'למחוק? לחצו שוב' : 'מחיקת הברכה שלי' }}
+        </button>
+      }
+    </div>
+    <p class="msg" [class]="msg().kind" role="status">{{ msg().text }}</p>
+  </form>
+
+  @if (list().length) {
+    <ul class="wishes">
+      @for (w of list(); track w.id) {
+        <li class="wish" [class.own]="w.mine">
+          @if (w.text) { <p>{{ w.text }}</p> }
+          @if (w.audio) { <audio controls preload="none" [src]="w.audio"></audio> }
+          <div class="who">
+            <b>{{ w.name }}</b>
+            <span>{{ when(w.ts) }}</span>
+            @if (isAdmin() && !w.mine) {
+              <button type="button" class="btn quiet danger" (click)="deleteAny(w)">
+                {{ armedDelete() === w.id ? 'למחוק? לחצו שוב' : 'מחיקה' }}
+              </button>
+            }
+          </div>
+        </li>
+      }
+    </ul>
+  } @else if (loadError()) {
+    <p class="empty">לא ניתן לטעון את הברכות כרגע.</p>
+  } @else {
+    <p class="empty">עוד אין ברכות. הברכה הראשונה יכולה להיות שלכם.</p>
+  }
+</section>

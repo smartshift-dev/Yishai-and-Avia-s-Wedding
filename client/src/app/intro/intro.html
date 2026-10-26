@@ -1,0 +1,97 @@
+<div class="rays" aria-hidden="true"></div>
+<div class="bokeh" aria-hidden="true">
+  @for (b of bokeh; track $index) {
+    <i [style.left]="b.left" [style.top]="b.top" [style.width]="b.size" [style.height]="b.size" [style.animation-delay]="b.delay"></i>
+  }
+</div>
+<div class="petals" aria-hidden="true">
+  @for (p of petals; track $index) {
+    <i [class.gold]="p.gold" [style.left]="p.left" [style.width]="p.size" [style.height]="p.size"
+       [style.animation-duration]="p.dur" [style.animation-delay]="p.delay" [style.--sway]="p.sway"></i>
+  }
+</div>
+<div class="frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<div class="flash" aria-hidden="true"></div>
+
+<div class="stage">
+  <p class="kicker in" style="--d:.2s">
+    <span class="orn" aria-hidden="true">✦</span> השמחה הגדולה של השנה <span class="orn" aria-hidden="true">✦</span>
+  </p>
+
+  <button class="envelope in" style="--d:.5s" type="button" (click)="open()" aria-label="פתיחת ההזמנה (עם מנגינה)">
+    <span class="glow"></span>
+    <span class="letter">
+      <svg class="star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4z"/></svg>
+      <span class="l-names">{{ event.couple[0] }} &amp; {{ event.couple[1] }}</span>
+      <span class="l-date">{{ event.hebrewDate }}</span>
+    </span>
+    <span class="pocket"><span class="to">לאורחינו היקרים</span></span>
+    <span class="flap"></span>
+    <span class="seal" aria-hidden="true">
+      <svg viewBox="0 0 100 100">
+        <defs>
+          <!-- poured gold wax -->
+          <radialGradient id="wax" cx="36%" cy="30%" r="78%">
+            <stop offset="0" stop-color="#FFF4CF"/><stop offset=".28" stop-color="#EBCB7C"/><stop offset=".62" stop-color="#C69B45"/><stop offset="1" stop-color="#8A6820"/>
+          </radialGradient>
+          <!-- pressed-in centre, slightly darker than the rim -->
+          <radialGradient id="well" cx="40%" cy="35%" r="70%">
+            <stop offset="0" stop-color="#F3DC9C"/><stop offset=".7" stop-color="#D4AE5E"/><stop offset="1" stop-color="#B38B3A"/>
+          </radialGradient>
+          <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#FFF7DA"/><stop offset=".5" stop-color="#D9B45F"/><stop offset="1" stop-color="#7A5A16"/>
+          </linearGradient>
+          <linearGradient id="ink" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#6E5013"/><stop offset="1" stop-color="#8F6B22"/>
+          </linearGradient>
+          <!-- debossed: dark edge above, light catch below -->
+          <filter id="deboss" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy=".7" stdDeviation=".25" flood-color="#FFF6D6" flood-opacity=".95"/>
+          </filter>
+          <filter id="deboss-sm" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy=".3" stdDeviation=".12" flood-color="#FFF6D6" flood-opacity=".7"/>
+          </filter>
+        </defs>
+        <path [attr.d]="sealPath" fill="url(#wax)"/>
+        <path [attr.d]="sealPath" fill="none" stroke="#7A5A16" stroke-opacity=".35" stroke-width=".8"/>
+        <!-- raised rim around a pressed well -->
+        <circle cx="50" cy="50" r="41" fill="none" stroke="url(#rim)" stroke-width="3.2"/>
+        <circle cx="50" cy="50" r="39.2" fill="url(#well)"/>
+        <circle cx="50" cy="50" r="39.2" fill="none" stroke="#7A5A16" stroke-opacity=".45" stroke-width=".6"/>
+        <!-- soft gloss -->
+        <ellipse cx="38" cy="30" rx="16" ry="9" fill="#fff" opacity=".22" transform="rotate(-25 38 30)"/>
+        <g filter="url(#deboss-sm)" fill="#8F6B22">
+          @for (l of wreath; track $index) {
+            <ellipse [attr.cx]="l.x" [attr.cy]="l.y" [attr.rx]="l.rx" [attr.ry]="l.ry" [attr.transform]="'rotate(' + l.rot + ' ' + l.x + ' ' + l.y + ')'"/>
+          }
+        </g>
+        <g filter="url(#deboss)" fill="url(#ink)">
+          <path d="M50 13.6l1 2.3 2.3 1-2.3 1-1 2.3-1-2.3-2.3-1 2.3-1z"/>
+          <text x="35.5" y="60" text-anchor="middle" direction="ltr" class="mono">{{ initials[0] }}</text>
+          <text x="50" y="59" text-anchor="middle" direction="ltr" class="amp">&amp;</text>
+          <text x="64.5" y="60" text-anchor="middle" direction="ltr" class="mono">{{ initials[1] }}</text>
+          <path d="M40 66.5h20" stroke="url(#ink)" stroke-width=".5" opacity=".7"/>
+          <circle cx="50" cy="66.5" r="1"/>
+        </g>
+      </svg>
+    </span>
+    <span class="sparks">
+      @for (s of sparks; track $index) {
+        <b [style.--a]="s.a" [style.--dist]="s.dist" [style.--s]="s.size"></b>
+      }
+    </span>
+  </button>
+
+  <h1 class="names gold-text in" style="--d:1s">{{ event.couple[0] }}<span class="and">&amp;</span>{{ event.couple[1] }}</h1>
+
+  <p class="when in" style="--d:1.3s">
+    {{ event.hebrewDate }}
+    @if (daysLabel) { <span class="sep" aria-hidden="true">✦</span> <b>{{ daysLabel }}</b> }
+  </p>
+
+  <button class="cta in" style="--d:1.7s" type="button" (click)="open()">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 18V6l11-2v12" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="6.5" cy="18" r="2.8"/><circle cx="17.5" cy="16" r="2.8"/></svg>
+    פתחו את ההזמנה
+  </button>
+  <p class="sub in" style="--d:2s">מומלץ להגביר את הקול 🔊</p>
+</div>

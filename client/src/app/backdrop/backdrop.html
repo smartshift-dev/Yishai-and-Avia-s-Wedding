@@ -1,0 +1,68 @@
+<div class="pattern"><i></i></div>
+<div class="stars"><i></i><i></i></div>
+
+<ng-template #branch>
+  <svg viewBox="0 0 120 300" fill="currentColor">
+    <path d="M30 0 Q72 110 44 300" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+    @for (l of leaves; track $index) {
+      <ellipse [attr.cx]="l.x" [attr.cy]="l.y" rx="5.5" [attr.ry]="l.ry" [attr.transform]="'rotate(' + l.rot + ' ' + l.x + ' ' + l.y + ') translate(0 ' + (-+l.ry) + ')'"/>
+    }
+    @for (o of olives; track $index) {
+      <circle [attr.cx]="o.x" [attr.cy]="o.y" r="4.5"/>
+    }
+  </svg>
+</ng-template>
+<div class="branch start"><ng-container [ngTemplateOutlet]="branch" /></div>
+<div class="branch end"><ng-container [ngTemplateOutlet]="branch" /></div>
+
+<div class="sparks">
+  @for (s of sparks; track $index) {
+    <b [style.left]="s.left" [style.width]="s.size" [style.height]="s.size"
+       [style.animation-duration]="s.dur" [style.animation-delay]="s.delay" [style.--drift]="s.drift"></b>
+  }
+</div>
+
+<svg class="skyline" viewBox="0 0 1200 200" preserveAspectRatio="xMidYMax slice" fill="currentColor">
+  <!-- hills -->
+  <path d="M0 200V172Q160 150 320 166T640 160T960 166T1200 156V200Z" opacity=".55"/>
+  <!-- city wall with merlons -->
+  <rect x="60" y="150" width="1100" height="50"/>
+  @for (x of merlons; track x) { <rect [attr.x]="x" y="141" width="12" height="10"/> }
+  <!-- Jaffa-gate style arch -->
+  <path d="M470 200V172a20 20 0 0 1 40 0V200Z" class="hole"/>
+  <!-- Tower of David citadel -->
+  <rect x="190" y="98" width="120" height="56"/>
+  <rect x="240" y="44" width="22" height="110"/>
+  <rect x="233" y="40" width="36" height="7"/>
+  <rect x="244" y="22" width="14" height="19"/>
+  <path d="M242 23Q251 6 260 23Z"/>
+  <rect x="250" y="2" width="2" height="8"/>
+  @for (x of [190, 206, 222, 270, 286, 302]; track x) { <rect [attr.x]="x" y="90" width="9" height="9"/> }
+  <path d="M248 70a3 3 0 0 1 6 0v10h-6Z" class="hole"/>
+  <path d="M204 115a4 4 0 0 1 8 0v12h-8Z M288 115a4 4 0 0 1 8 0v12h-8Z" class="hole"/>
+  <!-- cypress trees -->
+  <ellipse cx="350" cy="118" rx="9" ry="34"/>
+  <ellipse cx="372" cy="126" rx="7" ry="26"/>
+  <ellipse cx="820" cy="116" rx="9" ry="36"/>
+  <ellipse cx="1080" cy="122" rx="8" ry="30"/>
+  <!-- houses -->
+  <rect x="395" y="112" width="70" height="40"/>
+  <path d="M405 112q12-16 24 0Z"/>
+  <path d="M410 128a5 5 0 0 1 10 0v12h-10Z M440 128a5 5 0 0 1 10 0v12h-10Z" class="hole"/>
+  <rect x="680" y="118" width="120" height="34"/>
+  <rect x="725" y="100" width="40" height="20"/>
+  <path d="M700 132a5 5 0 0 1 10 0v12h-10Z M740 128a6 6 0 0 1 12 0v16h-12Z M780 132a5 5 0 0 1 10 0v12h-10Z" class="hole"/>
+  <!-- synagogue dome -->
+  <rect x="545" y="96" width="110" height="56"/>
+  <rect x="560" y="84" width="80" height="14"/>
+  <path d="M556 85Q600 8 644 85Z"/>
+  <rect x="594" y="30" width="12" height="16"/>
+  <path d="M592 31Q600 18 608 31Z"/>
+  <path d="M570 112a6 6 0 0 1 12 0v22h-12Z M594 108a6 6 0 0 1 12 0v26h-12Z M618 112a6 6 0 0 1 12 0v22h-12Z" class="hole"/>
+  <!-- tower on the east -->
+  <rect x="930" y="88" width="46" height="64"/>
+  @for (x of [930, 946, 962]; track x) { <rect [attr.x]="x" y="80" width="10" height="9"/> }
+  <path d="M946 108a6 6 0 0 1 12 0v18h-12Z" class="hole"/>
+  <rect x="990" y="120" width="70" height="32"/>
+  <path d="M1000 120q15-18 30 0Z"/>
+</svg>

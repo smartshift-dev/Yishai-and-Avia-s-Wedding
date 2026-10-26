@@ -1,0 +1,98 @@
+<app-backdrop />
+@if (showIntro()) {
+  <app-intro (opened)="onOpened()" />
+}
+
+<main>
+  <span class="bsd">בס״ד</span>
+
+  <header class="hero">
+    <svg class="keystone" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+      <path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4z"/>
+    </svg>
+    <svg class="chuppah" viewBox="0 0 460 150" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      <path d="M40 46 Q230 2 420 46"/>
+      <path d="M40 46 Q230 14 420 46" stroke-width="1.2" opacity=".6"/>
+      <path d="M40 46 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0 q11 16 22 0" stroke-width="1.4"/>
+      <line x1="40" y1="40" x2="40" y2="150"/><line x1="420" y1="40" x2="420" y2="150"/>
+      <circle cx="40" cy="36" r="4.5" fill="currentColor"/><circle cx="420" cy="36" r="4.5" fill="currentColor"/>
+      <circle cx="230" cy="22" r="3" fill="currentColor"/>
+    </svg>
+    <p class="kicker">שמחים להזמינכם לחתונתנו</p>
+    <h1 class="names gold-text">{{ event.couple[0] }}<span class="and">&amp;</span>{{ event.couple[1] }}</h1>
+    <p class="dates">{{ event.hebrewDate }}</p>
+    <p class="meta">
+      <span>{{ event.gregorianLabel }}<span class="sep" aria-hidden="true">✦</span>{{ event.timeLabel }}</span>
+      <span>{{ event.venue }}, {{ event.city }}</span>
+    </p>
+    <p class="pasuk">״עוד ישמע בערי יהודה ובחוצות ירושלים,<br>קול ששון וקול שמחה, קול חתן וקול כלה״</p>
+  </header>
+
+  <app-countdown />
+
+  <div class="actions">
+    <a class="btn primary" [href]="links.gcal" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+      הוספה ליומן
+    </a>
+    <button class="btn" type="button" (click)="burst()">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4z"/></svg>
+      קונפטי
+    </button>
+  </div>
+
+  <div class="ornament" aria-hidden="true">
+    <svg viewBox="0 0 56 20" fill="currentColor"><circle cx="6" cy="10" r="2"/><path d="M28 2l5 8-5 8-5-8z"/><circle cx="50" cy="10" r="2"/><circle cx="16" cy="10" r="1.2"/><circle cx="40" cy="10" r="1.2"/></svg>
+  </div>
+
+  <section class="block" aria-labelledby="venue-h" appReveal>
+    <h2 id="venue-h">מקום האירוע</h2>
+    <p class="lead">נשמח לראותכם</p>
+    <div class="card framed venue">
+      <span class="pin" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s7-6.2 7-12a7 7 0 10-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+      </span>
+      <h3>{{ event.venue }}</h3>
+      <p>{{ event.city }}</p>
+      <div class="actions">
+        <a class="btn" [href]="links.waze" target="_blank" rel="noopener">ניווט ב-Waze</a>
+        <a class="btn" [href]="links.gmaps" target="_blank" rel="noopener">פתיחה ב-Google Maps</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="ornament" aria-hidden="true">
+    <svg viewBox="0 0 56 20" fill="currentColor"><circle cx="6" cy="10" r="2"/><path d="M28 2l5 8-5 8-5-8z"/><circle cx="50" cy="10" r="2"/><circle cx="16" cy="10" r="1.2"/><circle cx="40" cy="10" r="1.2"/></svg>
+  </div>
+
+  <app-wishes appReveal />
+
+  <footer>
+    <p class="sign gold-text">בשעה טובה ומוצלחת</p>
+    @if (api.isAdmin()) {
+      <div><a routerLink="/admin">מחוברים כבעלי השמחה</a></div>
+    }
+  </footer>
+</main>
+
+@if (!musicUnavailable() && !showIntro()) {
+  <button class="music" type="button" (click)="toggleMusic()" [attr.aria-pressed]="playing()"
+          [attr.aria-label]="playing() ? 'עצירת מנגינת החופה' : 'השמעת מנגינת החופה'">
+    <span class="disc" aria-hidden="true">
+      @if (playing()) {
+        <span class="eq"><b></b><b></b><b></b><b></b></span>
+      } @else {
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      }
+    </span>
+    <span class="label">
+      @if (playing()) { מנגינת החופה מתנגנת } @else { מנגינת החופה }
+      <small>
+        @if (playing()) { לחצו לעצירה } @else { לחצו להפעלה }
+      </small>
+    </span>
+    @if (playing()) {
+      <span class="stop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></span>
+    }
+  </button>
+}

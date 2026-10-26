@@ -1,0 +1,47 @@
+:host{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;color:var(--gold)}
+
+/* papercut eight-pointed-star lattice, fading out from the centre */
+.pattern{position:absolute;inset:0;
+  -webkit-mask-image:radial-gradient(ellipse 75% 60% at 50% 35%,transparent 25%,#000 100%);
+  mask-image:radial-gradient(ellipse 75% 60% at 50% 35%,transparent 25%,#000 100%)}
+.pattern i{position:absolute;inset:0;background:var(--gold);opacity:var(--pattern-o,.09);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.1'%3E%3Crect x='27' y='27' width='30' height='30'/%3E%3Crect x='27' y='27' width='30' height='30' transform='rotate(45 42 42)'/%3E%3Ccircle cx='42' cy='42' r='6'/%3E%3Cpath d='M0 0L21 21M84 0L63 21M0 84L21 63M84 84L63 63M42 0v6M42 84v-6M0 42h6M84 42h-6'/%3E%3C/g%3E%3C/svg%3E") 0 0/84px 84px repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.1'%3E%3Crect x='27' y='27' width='30' height='30'/%3E%3Crect x='27' y='27' width='30' height='30' transform='rotate(45 42 42)'/%3E%3Ccircle cx='42' cy='42' r='6'/%3E%3Cpath d='M0 0L21 21M84 0L63 21M0 84L21 63M84 84L63 63M42 0v6M42 84v-6M0 42h6M84 42h-6'/%3E%3C/g%3E%3C/svg%3E") 0 0/84px 84px repeat}
+
+/* twinkling stars */
+.stars i{position:absolute;inset:-50%;
+  background-image:
+    radial-gradient(1.4px 1.4px at 20px 30px,var(--star),transparent),
+    radial-gradient(1px 1px at 90px 120px,var(--star),transparent),
+    radial-gradient(1.8px 1.8px at 160px 60px,var(--star),transparent),
+    radial-gradient(1px 1px at 230px 170px,var(--star),transparent),
+    radial-gradient(1.2px 1.2px at 50px 210px,var(--star),transparent);
+  background-size:260px 240px;animation:twinkle 6s ease-in-out infinite alternate}
+.stars i:nth-child(2){background-size:370px 330px;background-position:120px 80px;animation-duration:9s;animation-delay:-3s}
+@keyframes twinkle{from{opacity:.3}to{opacity:1}}
+
+/* olive branches in the top corners (wide screens) */
+.branch{position:absolute;top:-10px;width:clamp(90px,12vw,150px);opacity:.22;display:none}
+.branch svg{display:block;width:100%;height:auto}
+.branch.start{right:2vw;transform:rotate(-8deg)}
+.branch.end{left:2vw;transform:scaleX(-1) rotate(-8deg)}
+@media (min-width:900px){.branch{display:block}}
+
+/* rising golden sparks */
+.sparks b{position:absolute;bottom:-20px;border-radius:50%;
+  background:radial-gradient(circle,var(--gold-hi) 0%,var(--gold) 45%,transparent 70%);
+  box-shadow:0 0 10px 2px var(--glow);opacity:0;animation:rise linear infinite}
+@keyframes rise{
+  0%{transform:translate(0,0);opacity:0}
+  10%{opacity:.85}
+  80%{opacity:.5}
+  100%{transform:translate(var(--drift),-105vh);opacity:0}}
+
+/* Jerusalem skyline along the bottom */
+.skyline{position:absolute;left:0;bottom:0;width:100%;height:clamp(110px,18vw,190px);opacity:var(--skyline-o,.13)}
+.skyline .hole{fill:var(--bg-2)}
+
+@media (prefers-reduced-motion:reduce){
+  .stars i{animation:none}
+  .sparks{display:none}
+}
